@@ -2,10 +2,11 @@ package com.marcoscouto.brazilianleague.models;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Component
-public class Team {
+public class Team implements Serializable {
 
     private Long id;
     private String name;
