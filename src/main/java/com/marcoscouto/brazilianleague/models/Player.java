@@ -3,6 +3,7 @@ package com.marcoscouto.brazilianleague.models;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Component
 public class Player implements Serializable {
@@ -44,5 +45,18 @@ public class Player implements Serializable {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name) &&
+                Objects.equals(position, player.position) &&
+                Objects.equals(age, player.age);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, position, age);
+    }
 }

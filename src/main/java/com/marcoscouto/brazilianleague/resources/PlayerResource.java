@@ -22,6 +22,7 @@ public class PlayerResource {
     @GetMapping(value = "/team/{id}")
     public ResponseEntity<Set<Player>> findByTeam(@PathVariable String id) throws IOException {
         Set<Player> players = playerClient.findByTeam(id);
+
         if(players == null)
             return ResponseEntity.status(404).build();
         return ResponseEntity.ok().body(players);
