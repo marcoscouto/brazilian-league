@@ -6,6 +6,8 @@ import com.marcoscouto.brazilianleague.client.TeamStatisticClient;
 import com.marcoscouto.brazilianleague.models.Player;
 import com.marcoscouto.brazilianleague.models.Team;
 import com.marcoscouto.brazilianleague.models.TeamStatistic;
+import com.marcoscouto.brazilianleague.repositories.TeamRepository;
+import com.marcoscouto.brazilianleague.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +29,17 @@ public class TeamResource {
     private TeamClient teamClient;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private TeamStatisticClient teamStatisticClient;
 
     @Autowired
     private PlayerClient playerClient;
 
     @GetMapping
-    public ResponseEntity<List<Team>> findAll() throws IOException {
-        List<Team> teams= new ArrayList<>();
-        //int[] leagues = {357, 358, 1003, 1007};
-        String serieA = "357";
-        teamClient.findAll(serieA).forEach(x -> teams.add(x));
+    public ResponseEntity<List<Team>> findAll() {
+        List<Team> teams = teamService.findAll();
         return ResponseEntity.ok().body(teams);
     }
 

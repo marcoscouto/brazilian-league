@@ -2,6 +2,7 @@ package com.marcoscouto.brazilianleague.models;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 

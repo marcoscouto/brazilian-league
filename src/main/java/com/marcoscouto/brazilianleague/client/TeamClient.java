@@ -1,9 +1,11 @@
 package com.marcoscouto.brazilianleague.client;
 
 import com.marcoscouto.brazilianleague.models.Team;
+import com.marcoscouto.brazilianleague.services.TeamService;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,6 +18,9 @@ import java.util.List;
 
 @Component
 public class TeamClient {
+
+    @Autowired
+    private TeamService teamService;
 
     private final String url = "https://api-football-v1.p.rapidapi.com/v2/teams/league/";
 
@@ -40,13 +45,11 @@ public class TeamClient {
             JSONArray array = obj.getJSONArray("teams");
 
             for (int i = 0; i < array.length(); i++) {
-                teams.add(
-                        new Team(
-                                array.getJSONObject(i).getLong("team_id"),
-                                array.getJSONObject(i).getString("name"),
-                                array.getJSONObject(i).getString("logo")
-
-                        ));
+                Team team = new Team(
+                        array.getJSONObject(i).getLong("team_id"),
+                        array.getJSONObject(i).getString("name"),
+                        array.getJSONObject(i).getString("logo"));
+                teams.add(team);
             }
             return teams;
         }

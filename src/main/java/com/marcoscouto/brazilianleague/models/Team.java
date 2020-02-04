@@ -1,14 +1,17 @@
 package com.marcoscouto.brazilianleague.models;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Component
+@Entity
+@Table(name = "tb_team")
 public class Team implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long code;
     private String name;
     private String urlLogo;
 
@@ -16,17 +19,17 @@ public class Team implements Serializable {
     }
 
     public Team(Long id, String name, String urlLogo) {
-        this.id = id;
+        this.code = id;
         this.name = name;
         this.urlLogo = urlLogo;
     }
 
     public Long getId() {
-        return id;
+        return code;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.code = id;
     }
 
     public String getName() {
@@ -50,11 +53,11 @@ public class Team implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
-        return Objects.equals(id, team.id);
+        return Objects.equals(code, team.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(code);
     }
 }
