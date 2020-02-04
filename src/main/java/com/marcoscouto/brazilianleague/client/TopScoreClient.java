@@ -1,9 +1,11 @@
 package com.marcoscouto.brazilianleague.client;
 
 import com.marcoscouto.brazilianleague.models.TopScore;
+import com.marcoscouto.brazilianleague.services.TeamService;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,7 +26,10 @@ public class TopScoreClient {
     private final String hostValue = "api-football-v1.p.rapidapi.com";
 
     private final String key = "x-rapidapi-key";
-    private final String keyValue = "804a18db84msh025369b8e1261c1p159576jsna1a63729f3fe";
+    private final String keyValue = "bfbace7230msh49955ffff281f95p1fb862jsn334160d7a9ae";
+
+    @Autowired
+    private TeamService teamService;
 
     public List<TopScore> findTopScore(String league) throws IOException {
         String link = url + league;
@@ -41,17 +46,9 @@ public class TopScoreClient {
             JSONArray array = obj.getJSONArray("topscorers");
 
             for (int i = 0; i < array.length(); i++) {
-                System.out.println();
                 int id = array.getJSONObject(i).getInt("team_id");
-                conn = (HttpURLConnection) new URL(team + id).openConnection();
-                conn.setRequestProperty(host, hostValue);
-                conn.setRequestProperty(key, keyValue);
-                in = conn.getInputStream();
-                JSONObject obj2 = new JSONObject(IOUtils.toString(in, Charset.forName("UTF-8")));
-                String teamLogo = obj2.getJSONObject("api")
-                        .getJSONArray("teams")
-                        .getJSONObject(0)
-                        .getString("logo");
+                String teamLogo = teamService.findByCode(id).getUrlLogo();
+                System.out.println(teamLogo);
 
                 topScores.add(
                         new TopScore(

@@ -28,7 +28,7 @@ public class TeamClient {
     private final String hostValue = "api-football-v1.p.rapidapi.com";
 
     private final String key = "x-rapidapi-key";
-    private final String keyValue = "804a18db84msh025369b8e1261c1p159576jsna1a63729f3fe";
+    private final String keyValue = "bfbace7230msh49955ffff281f95p1fb862jsn334160d7a9ae";
 
     public List<Team> findAll(String league) throws IOException {
         String link = url + league;

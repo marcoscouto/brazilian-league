@@ -4,6 +4,7 @@ import com.marcoscouto.brazilianleague.client.PlayerClient;
 import com.marcoscouto.brazilianleague.client.TopScoreClient;
 import com.marcoscouto.brazilianleague.models.Player;
 import com.marcoscouto.brazilianleague.models.TopScore;
+import com.marcoscouto.brazilianleague.services.TopScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class PlayerResource {
     private PlayerClient playerClient;
 
     @Autowired
-    private TopScoreClient topScoreClient;
+    private TopScoreService topScoreService;
 
     @GetMapping(value = "/team/{id}")
     public ResponseEntity<Set<Player>> findByTeam(@PathVariable String id) throws IOException {
@@ -35,7 +36,7 @@ public class PlayerResource {
 
     @GetMapping(value = "/topscores")
     public ResponseEntity<List<TopScore>> findTopScores() throws IOException {
-        List<TopScore> topScores = topScoreClient.findTopScore("357");
+        List<TopScore> topScores = topScoreService.findAll();
         return ResponseEntity.ok().body(topScores);
     }
 

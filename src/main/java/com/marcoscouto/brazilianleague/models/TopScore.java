@@ -1,12 +1,15 @@
 package com.marcoscouto.brazilianleague.models;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Component
+@Entity
+@Table(name = "tb_topscore")
 public class TopScore implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private Integer goal;
     private Integer assists;

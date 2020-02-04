@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
-    @Query(value = "SELECT * FROM tb_team WHERE team.code = :code", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_team as team WHERE team.code = :code", nativeQuery = true)
     public Team findByCode(@Param("code") Integer code);
 
 }
