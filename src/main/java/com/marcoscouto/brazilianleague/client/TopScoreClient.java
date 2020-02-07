@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,11 +23,17 @@ public class TopScoreClient {
     private final String url = "https://api-football-v1.p.rapidapi.com/v2/topscorers/";
     private final String team = "https://api-football-v1.p.rapidapi.com/v2/teams/team/";
 
-    private final String host = "x-rapidapi-host";
-    private final String hostValue = "api-football-v1.p.rapidapi.com";
+    @Value("${api.host}")
+    private String host;
 
-    private final String key = "x-rapidapi-key";
-    private final String keyValue = "bfbace7230msh49955ffff281f95p1fb862jsn334160d7a9ae";
+    @Value("${api.hostValue}")
+    private String hostValue;
+
+    @Value("${api.key}")
+    private String key;
+
+    @Value("${api.keyValue}")
+    private String keyValue;
 
     @Autowired
     private TeamService teamService;
@@ -48,7 +55,6 @@ public class TopScoreClient {
             for (int i = 0; i < array.length(); i++) {
                 int id = array.getJSONObject(i).getInt("team_id");
                 String teamLogo = teamService.findByCode(id).getUrlLogo();
-                System.out.println(teamLogo);
 
                 topScores.add(
                         new TopScore(
