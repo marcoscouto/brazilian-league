@@ -18,35 +18,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TeamStatisticClient {
-
-    private final String url = "https://api-football-v1.p.rapidapi.com/v2/teams/team/";
-    private final String urlStatistic = "https://api-football-v1.p.rapidapi.com/v2/statistics/357/";
-
-    @Value("${api.host}")
-    private String host;
-
-    @Value("${api.hostValue}")
-    private String hostValue;
-
-    @Value("${api.key}")
-    private String key;
-
-    @Value("${api.keyValue}")
-    private String keyValue;
+public class TeamStatisticClient extends AbstractClient{
 
     public TeamStatistic findById(Integer id) throws IOException {
-        String link = url + id;
-        HttpURLConnection conn = (HttpURLConnection) new URL(link).openConnection();
-        conn.setRequestProperty(host, hostValue);
-        conn.setRequestProperty(key, keyValue);
-        InputStream in;
+
+        String endpoint = "/teams/team/" + id;
+
+        HttpURLConnection conn = connection(endpoint);
 
         if(conn.getResponseCode() == 200){
-            in = conn.getInputStream();
-            JSONObject obj = new JSONObject(IOUtils.toString(in, Charset.forName("UTF-8")));
-            obj = obj.getJSONObject("api");
-            JSONArray array = obj.getJSONArray("teams");
+            JSONObject obj = new JSONObject(
+                    IOUtils.toString(conn.getInputStream(), Charset.forName("UTF-8")));
+            JSONArray array =
+                    obj
+                    .getJSONObject("api")
+                    .getJSONArray("teams");
 
             TeamStatistic teamStatistic = getStatistics(id);
 
@@ -54,6 +40,8 @@ public class TeamStatisticClient {
 
             teamStatistic.setName(array.getJSONObject(0).getString("name"));
             teamStatistic.setPosition(getPosition(id));
+
+            conn.disconnect();
 
             return teamStatistic;
         }
@@ -63,12 +51,11 @@ public class TeamStatisticClient {
 
     @JsonIgnore
     private TeamStatistic getStatistics(Integer id) throws IOException {
-        String link = urlStatistic + id;
-        HttpURLConnection conn = (HttpURLConnection) new URL(link).openConnection();
-        conn.setRequestProperty(host, hostValue);
-        conn.setRequestProperty(key, keyValue);
-        InputStream in = conn.getInputStream();
-        JSONObject obj = new JSONObject(IOUtils.toString(in, Charset.forName("UTF-8")));
+
+        String endpoint = "/statistics/357/" + id;
+        HttpURLConnection conn = connection(endpoint);
+        JSONObject obj = new JSONObject(
+                IOUtils.toString(conn.getInputStream(), Charset.forName("UTF-8")));
         obj = obj.getJSONObject("api")
                 .getJSONObject("statistics")
                 .getJSONObject("matchs");
@@ -79,7 +66,9 @@ public class TeamStatisticClient {
          teamStatistic.setDraw(obj.getJSONObject("draws").getInt("total"));
          teamStatistic.setLose(obj.getJSONObject("loses").getInt("total"));
 
-         return teamStatistic;
+        conn.disconnect();
+
+        return teamStatistic;
 }
 
     @JsonIgnore

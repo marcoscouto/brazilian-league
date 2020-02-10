@@ -1,7 +1,6 @@
 package com.marcoscouto.brazilianleague.resources;
 
 import com.marcoscouto.brazilianleague.client.PlayerClient;
-import com.marcoscouto.brazilianleague.client.TopScoreClient;
 import com.marcoscouto.brazilianleague.models.Player;
 import com.marcoscouto.brazilianleague.models.TopScore;
 import com.marcoscouto.brazilianleague.services.TopScoreService;

@@ -3,10 +3,8 @@ package com.marcoscouto.brazilianleague.resources;
 import com.marcoscouto.brazilianleague.client.PlayerClient;
 import com.marcoscouto.brazilianleague.client.TeamClient;
 import com.marcoscouto.brazilianleague.client.TeamStatisticClient;
-import com.marcoscouto.brazilianleague.models.Player;
 import com.marcoscouto.brazilianleague.models.Team;
 import com.marcoscouto.brazilianleague.models.TeamStatistic;
-import com.marcoscouto.brazilianleague.repositories.TeamRepository;
 import com.marcoscouto.brazilianleague.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/teams")
