@@ -35,14 +35,14 @@ public class TeamResource {
     @GetMapping
     public ResponseEntity<List<Team>> findAll() {
         List<Team> teams = teamService.findAll();
-        return ResponseEntity.ok().body(teams);
+        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(teams);
     }
 
     @GetMapping(value = "/statistic/{id}")
     public ResponseEntity<TeamStatistic> findById(@PathVariable Integer id) throws IOException {
         TeamStatistic teamStatistic = teamStatisticClient.findById(id);
         if(teamStatistic == null)  return ResponseEntity.status(404).build();
-        return ResponseEntity.ok().body(teamStatistic);
+        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(teamStatistic);
     }
 
 }

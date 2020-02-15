@@ -30,13 +30,13 @@ public class PlayerResource {
 
         if(players == null)
             return ResponseEntity.status(404).build();
-        return ResponseEntity.ok().body(players);
+        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(players);
     }
 
     @GetMapping(value = "/topscores")
     public ResponseEntity<List<TopScore>> findTopScores() throws IOException {
         List<TopScore> topScores = topScoreService.findAll();
-        return ResponseEntity.ok().body(topScores);
+        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(topScores);
     }
 
 }
