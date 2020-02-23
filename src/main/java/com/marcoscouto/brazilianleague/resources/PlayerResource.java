@@ -1,8 +1,10 @@
 package com.marcoscouto.brazilianleague.resources;
 
 import com.marcoscouto.brazilianleague.client.PlayerClient;
+import com.marcoscouto.brazilianleague.dto.TeamPlayersDTO;
 import com.marcoscouto.brazilianleague.models.Player;
 import com.marcoscouto.brazilianleague.models.TopScore;
+import com.marcoscouto.brazilianleague.services.TeamPlayerService;
 import com.marcoscouto.brazilianleague.services.TopScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +26,16 @@ public class PlayerResource {
     @Autowired
     private TopScoreService topScoreService;
 
-    @GetMapping(value = "/team/{id}")
-    public ResponseEntity<Set<Player>> findByTeam(@PathVariable String id) throws IOException {
-        Set<Player> players = playerClient.findByTeam(id);
+    @Autowired
+    private TeamPlayerService teamPlayerService;
 
-        if(players == null)
+    @GetMapping(value = "/team/{id}")
+    public ResponseEntity<TeamPlayersDTO> findByTeam(@PathVariable String id) throws IOException {
+        TeamPlayersDTO teamPlayersDTO = teamPlayerService.findTeamPlayers(id);
+
+        if(teamPlayersDTO == null)
             return ResponseEntity.status(404).build();
-        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(players);
+        return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(teamPlayersDTO);
     }
 
     @GetMapping(value = "/topscores")

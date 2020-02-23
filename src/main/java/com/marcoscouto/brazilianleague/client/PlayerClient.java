@@ -1,9 +1,11 @@
 package com.marcoscouto.brazilianleague.client;
 
 import com.marcoscouto.brazilianleague.models.Player;
+import com.marcoscouto.brazilianleague.repositories.TeamRepository;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
